@@ -25,4 +25,4 @@ Route::get('/login/page', function () {
 Route::get('/reset/password', function () {
     return view('auth.resetPassword');
 });
-Route::post('/login','AuthController@login');
+Route::post('/login','WebAuthController@login');

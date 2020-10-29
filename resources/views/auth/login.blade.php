@@ -32,6 +32,11 @@
                     <p class="lead text-center mb-4">تسجيل دخول</p>
 
                     <!-- <p class="lead text-center alert alert-danger">خطأ!.. رمز التحقق غير صحيح!!</p>-->
+                    @if(session('message'))
+                    <div class="lead text-center alert alert-danger">
+                        {{ session('message') }}
+                    </div>
+                @endif
 
                     <form id="loginForm" method="POST" action="/login"  >
                         @csrf
