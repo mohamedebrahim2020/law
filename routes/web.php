@@ -19,3 +19,10 @@ Route::get('/', function () {
 Route::get('/hima', function () {
     return view('index');
 });
+Route::get('/login/page', function () {
+    return view('auth.login');
+});
+Route::get('/reset/password', function () {
+    return view('auth.resetPassword');
+});
+Route::post('/login','AuthController@login');
