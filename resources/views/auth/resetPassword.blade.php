@@ -38,12 +38,12 @@
 
                             <div class="input-group">
                                 <span class="add-on"><i class="fa fa-user"></i> </span>
-                                <input type="text" class="form-control" id="userName" required placeholder="اسم المستخدم" oninvalid="this.setCustomValidity('الرجاء ادخال اسم المستخدم')">
+                                <input type="text" name="user_name" class="form-control" id="userName" required placeholder="اسم المستخدم" oninvalid="this.setCustomValidity('الرجاء ادخال اسم المستخدم')">
                             </div>
 
                             <div class="input-group mt-2">
                                 <span class="add-on"><i class="fa fa-key"></i> </span>
-                                <input type="password" class="form-control" id="loginPassword" required placeholder="رمز التحقق">
+                                <input type="password" name="verification_code" class="form-control" id="loginPassword" required placeholder="رمز التحقق">
                             </div>
 
                         </div>

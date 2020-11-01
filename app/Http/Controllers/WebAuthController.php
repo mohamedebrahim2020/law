@@ -32,7 +32,7 @@ class WebAuthController extends Controller
                     return response($response, 200);
                 } else {
                     return redirect('/login/page')->with(
-                        'message', 'خطأ!.. رمز التحقق غير صحيح');
+                        'message', 'خطأ!.. الرقم السري غير صحيح');
                 }
             } else {
                 return redirect('/login/page')->with(
