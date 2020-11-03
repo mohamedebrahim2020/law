@@ -3,105 +3,103 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\EmailRequest;
+use App\Http\Requests\otpRequest;
+use App\Http\Requests\PasswordRequest;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Notifications\PasswordResetRequest;
 use App\Notifications\PasswordResetSuccess;
 use App\User;
 use App\PasswordReset;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
 class PasswordResetController extends Controller
 {
+    public function showCodeRequestForm(){
+        return view('auth.emailResetPassword');
+    }
     /**
      * Create token password reset
      *
      * @param  [string] email
      * @return [string] message
      */
-    public function create(Request $request)
+    public function create(EmailRequest $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-        ]);
-        $user = User::where('email', $request->email)->first();
-        if (!$user)
-            return response()->json([
-                'message' => "We can't find a user with that e-mail address."
-            ], 404);
+      
+         $user = User::where('email', $request->email)->first();
+        // if (!$user)
+        // if( $request->is('api/*') || $request->wantsJson()){
+        //     return response()->json([
+        //         'message' => "لا يوجد مستخدم بهذا البريد الإلكتروني"
+        //     ], 404);
+        // }     
         $passwordReset = PasswordReset::updateOrCreate(
             ['email' => $user->email],
             [
                 'email' => $user->email,
-                'token' => Str::random(60)
-             ]
+                'token' => Str::random(60),
+                'otp_token'=> Str::random(6),
+                'updated_at'=> now(),
+            ]
         );
         if ($user && $passwordReset)
             $user->notify(
-                new PasswordResetRequest($passwordReset->token)
+                new PasswordResetRequest($passwordReset->otp_token)
             );
+        if( $request->is('api/*') || $request->wantsJson()){    
         return response()->json([
-            'message' => 'We have e-mailed your password reset link!',
-            'token' => $passwordReset->token ,
+            'message' => 'تم إرسال رمز التتبع علي الايميل',
+            
         ]);
+        } else{
+            return redirect('/invalid/code')->with('message','تم إرسال رمز التتبع علي الايميل');
+        }
     }
     /**
      * Find token password reset
      *
-     * @param  [string] $token
+     
      * @return [string] message
      * @return [json] passwordReset object
      */
-    public function find($token)
+    public function find(otpRequest $request)
     {
-        $passwordReset = PasswordReset::where('token', $token)
+        $passwordReset = PasswordReset::where('otp_token', $request->otp_code)
             ->first();
-        if (!$passwordReset)
-            return response()->json([
-                'message' => 'This password reset token is invalid.'
-            ], 404);
+          
         if (Carbon::parse($passwordReset->updated_at)->addMinutes(720)->isPast()) {
             $passwordReset->delete();
+            if( $request->is('api/*') || $request->wantsJson()){    
             return response()->json([
-                'message' => 'This password reset token is invalid.'
+                'message' => 'رمز التحقق غير صحيح'
             ], 404);
+        } else {
+            return Redirect::back()->with('message','رمز التحقق غير صحيح');
+        } 
         }
-        return response()->json($passwordReset);
+        if( $request->is('api/*') || $request->wantsJson()){ 
+        return response()->json(["token"=>$passwordReset->token,"message"=>"تم إدخال رمز التحقق بنجاح"]);
+        } else{
+            return view('auth.resetPassword')->with('token',$passwordReset->token);
+        }
     }
-     /**
-     * Reset password
-     *
-     * @param  [string] email
-     * @param  [string] password
-     * @param  [string] password_confirmation
-     * @param  [string] token
-     * @return [string] message
-     * @return [json] user object
-     */
-    public function reset(Request $request)
+     
+    public function set(PasswordRequest $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-            'token' => 'required|string'
-        ]);
+       
         $passwordReset = PasswordReset::where([
             ['token', $request->token],
             ['email', $request->email]
         ])->first();
-        if (!$passwordReset)
-            return response()->json([
-                'message' => 'This password reset token is invalid.'
-            ], 404);
-        $user = User::where('email', $passwordReset->email)->first();
-        if (!$user)
-            return response()->json([
-                'message' => "We can't find a user with that e-mail address."
-            ], 404);
-        $user->password = bcrypt($request->password);
+        $user = User::where('email', $passwordReset->email)->first();   
+        $user->password = $request->password;//bcrypt($request->password);
         $user->save();
         $passwordReset->delete();
         $user->notify(new PasswordResetSuccess($passwordReset));
-        return response()->json($user);
+        return response()->json(["user"=>$user,"message"=>"تم تعديل الرقم السري بنجاح"]);
+
     }
 }

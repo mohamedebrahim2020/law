@@ -41,11 +41,13 @@ class PasswordResetRequest extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = url('/api/password/find/'.$this->token);
+    //  $url = url('/api/password/find/'.$this->token);
         return (new MailMessage)
-                    ->line('You are receiving this email because wereceived a password reset request for your account.')
-                    ->action('Reset Password', url('$url'))
-                    ->line('Thank you for using our application!');
+                    ->from('test@example.com', 'Example')
+                    ->greeting('Hello!')
+                    ->line('You are receiving this email because we received a password reset request for your account.')
+                    ->line('otp_code :'.$this->token)
+                    ->line('Thank you for using Ittezan application!');
     }
 
     /**

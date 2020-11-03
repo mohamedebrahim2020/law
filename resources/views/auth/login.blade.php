@@ -62,7 +62,7 @@
                         <button class="btn btn-primary btn-block shadow-none my-4" type="submit">تسجيل دخول</button>
                     </form>
 
-                    <p class="text-center"><a class="btn-link" href="/reset/password">نسيت كلمة المرور؟</a></p>
+                    <p class="text-center"><a class="btn-link" href="/password/page">نسيت كلمة المرور؟</a></p>
 
                 </div>
                 <!-- Footer

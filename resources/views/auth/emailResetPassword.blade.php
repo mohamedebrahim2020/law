@@ -20,7 +20,11 @@
 <body>
     <div id="main-wrapper" class="h-100 login-body">
         <div class="container h-100">
-   
+            @if(session('message'))
+            <div class="lead text-center alert alert-danger">
+                {{ session('message') }}
+            </div>
+            @endif    
             <!-- Login Form
     ============================================= -->
             <div class="row no-gutters h-100">
@@ -30,46 +34,25 @@
                             <img class="logo-sm" src="{{ asset('img/logo.png') }}" alt="logo">
                         </a>
                     </div>
-                    <p class="lead text-center mb-4">إعادة تعيين كلمة السر</p>
+                    <p class="lead text-center mb-4">أكتب الإيميل المراد إرسال رمزالتحقق عليه</p>
 
                     <!-- <p class="lead text-center alert alert-danger">خطأ!.. رمز التحقق غير صحيح!!</p>-->
 
-                    <form id="loginForm" method="POST" action="{{ route('password.reset') }}">
+                    <form id="loginForm" method="POST" action="{{ route('password.email') }}">
                         @csrf
                         <div class="vertical-input-group">
 
                             <div class="input-group">
                                 <span class="add-on"><i class="fa fa-user"></i> </span>
-                                <input type="email" name="email" class="form-control" id="userName" placeholder="إيميل المستخدم"  autofocus>
-                     
+                                <input type="email" name="email" class="form-control" id="userName"  placeholder="إيميل المستخدم"   >
                             </div>
                             @error('email')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
-                            <div class="input-group mt-2">
-                                <span class="add-on"><i class="fa fa-key"></i> </span>
-                                <input type="password" name="password" class="form-control" id="loginPassword"  placeholder="كلمة المرور" >
-                            </div>
-                            @error('password')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                            {{-- <div class="input-group mt-2">
-                                <span class="add-on"><i class="fa fa-key"></i> </span>
-                                <input type="password" name="password_confirmation" class="form-control" id="loginPassword" placeholder="كلمة المرور" >
-                            </div>
-                            @error('password_confirmation')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror --}}
-                            <div class="input-group mt-2">
-                            @if ($token)   
-                            <input type="hidden" name="token" class="form-control" id="loginPassword" placeholder="كلمة المرور" value="{{$token}}" >
-                            </div>
-                            @endif
-
 
                         </div>
 
-                        <button class="btn btn-primary btn-block shadow-none my-4" type="submit">تأكيد</button>
+                        <button class="btn btn-primary btn-block shadow-none my-4" type="submit">إرسال رابط لإعادة تعيين الرقم السري</button>
                     </form>
 
                     <p class="text-center"><a class="btn-link" href="/login/page">الصفحة الرئيسية</a></p>
