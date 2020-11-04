@@ -87,11 +87,7 @@
                                 <input type="password" name="password" class="form-control" id="loginPassword"  placeholder="كلمة المرور" >
                             </div>
                             <div>
-                                @if(session('password_message'))
-                                    <span class="text-danger"id="loginPasswordErr" >{{ session('password_message') }}</span> 
-                                @else
                                 <span id="loginPasswordErr" ></span> 
-                                @endif
                             </div>
 
                             <div class="form-check form-check-inline mt-1">

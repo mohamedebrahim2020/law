@@ -94,7 +94,7 @@ class PasswordResetController extends Controller
             ['email', $request->email]
         ])->first();
         $user = User::where('email', $request->email)->first();
-        if (! $user) {
+        if (!$user) {
             return Redirect::back()->with('userMessage','لا يوجد مسنخدم بهذا الإيميل');
         } elseif (! $passwordReset) {
             return Redirect::back()->with('passwordMessage','هذا المستخدم لم يطلب تغيير كلمة المرور');
