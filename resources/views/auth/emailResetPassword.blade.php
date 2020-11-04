@@ -46,10 +46,12 @@
                                 <span class="add-on"><i class="fa fa-user"></i> </span>
                                 <input type="email" name="email" class="form-control" id="userName"  placeholder="إيميل المستخدم"   >
                             </div>
-                            @error('email')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-
+                            <div>
+                                @error('email')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                
                         </div>
 
                         <button class="btn btn-primary btn-block shadow-none my-4" type="submit">إرسال رابط لإعادة تعيين الرقم السري</button>

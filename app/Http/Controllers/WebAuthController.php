@@ -32,11 +32,11 @@ class WebAuthController extends Controller
                     return response($response, 200);
                 } else {
                     return redirect('/login/page')->with(
-                        'message', 'خطأ!.. كلمة المرور غير صحيحة');
+                        'password_message', 'خطأ!.. كلمة المرور غير صحيحة');
                 }
             } else {
                 return redirect('/login/page')->with(
-                    'message', 'المستخدم غير موجود');
+                    'user_message', 'المستخدم غير موجود');
             }
         }
 //Hash::check($request->password, $user->password)

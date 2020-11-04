@@ -16,7 +16,38 @@
     <link rel="stylesheet" type="text/css" href= "{{ asset('css/style.css') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+<script>
+    function validate() {
+            let Email = document.getElementById("userEmail");
+            let EmailErr = document.getElementById("user_EmailErr");
+            let Password = document.getElementById("loginPassword");
+            let PasswordErr = document.getElementById("loginPasswordErr");
+            if (Email.value == "" &&  Password.value == "" ) {
+                EmailErr.classList.add("text-danger");
+                EmailErr.innerHTML = "الرجاء إدخال إيميل المستخدم";
+                PasswordErr.classList.add("text-danger");
+                PasswordErr.innerHTML = " الرجاء إدخال كلمة المرور الجديدة";
+                return false;
+            } else if (Email.value == "" ) {
+                PasswordErr.innerHTML = "";
+                EmailErr.classList.add("text-danger");
+                EmailErr.innerHTML = "الرجاء إدخال إيميل المستخدم";
+                return false;
+            } else if (Password.value == "") {
+                EmailErr.innerHTML = "";
+                PasswordErr.classList.add("text-danger");
+                PasswordErr.innerHTML = " الرجاء إدخال كلمة المرور الجديدة";
+                return false;   
+            }else {
+                EmailErr.innerHTML = "";
+                PasswordErr.innerHTML = "";
 
+            }
+
+         
+        return (true);
+    }
+    </script>
 <body>
     <div id="main-wrapper" class="h-100 login-body">
         <div class="container h-100">
@@ -34,25 +65,33 @@
 
                     <!-- <p class="lead text-center alert alert-danger">خطأ!.. رمز التحقق غير صحيح!!</p>-->
 
-                    <form id="loginForm" method="POST" action="{{ route('password.reset') }}">
+                    <form id="loginForm" method="POST" action="{{ route('password.reset') }}" onsubmit="return(validate());">
                         @csrf
                         <div class="vertical-input-group">
 
                             <div class="input-group">
                                 <span class="add-on"><i class="fa fa-user"></i> </span>
-                                <input type="email" name="email" class="form-control" id="userName" placeholder="إيميل المستخدم"  autofocus>
-                     
+                                <input type="email" name="email" class="form-control" id="userEmail" placeholder="الإيميل" >
                             </div>
-                            @error('email')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
+                            <div>
+                                @if(session('userMessage')) 
+                                <span class="text-danger" id="user_EmailErr">{{ session('userMessage') }}</span> 
+                                @else
+                                <span  id="user_EmailErr"></span> 
+                                @endif
+                            </div>
+                       
                             <div class="input-group mt-2">
                                 <span class="add-on"><i class="fa fa-key"></i> </span>
-                                <input type="password" name="password" class="form-control" id="loginPassword"  placeholder="كلمة المرور" >
+                                <input type="password" name="password" class="form-control" id="loginPassword" placeholder="الرقم السري الجديد">
                             </div>
-                            @error('password')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
+                            <div>
+                                @if(session('passwordMessage'))    
+                                <span class="text-danger" id="loginPasswordErr">{{ session('passwordMessage') }}</span> 
+                                @else
+                                <span  id="loginPasswordErr"></span> 
+                                @endif
+                            </div>
                             {{-- <div class="input-group mt-2">
                                 <span class="add-on"><i class="fa fa-key"></i> </span>
                                 <input type="password" name="password_confirmation" class="form-control" id="loginPassword" placeholder="كلمة المرور" >
@@ -60,11 +99,7 @@
                             @error('password_confirmation')
                             <div class="alert alert-danger">{{ $message }}</div>
                             @enderror --}}
-                            <div class="input-group mt-2">
-                            @if ($token)   
-                            <input type="hidden" name="token" class="form-control" id="loginPassword" placeholder="كلمة المرور" value="{{$token}}" >
-                            </div>
-                            @endif
+              
 
 
                         </div>
@@ -93,4 +128,4 @@
 </html>
 
 <!-- Core -->
-<script type="text/javascript" src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+{{-- <script type="text/javascript" src="{{ asset('js/bootstrap.bundle.min.js') }}"></script> --}}

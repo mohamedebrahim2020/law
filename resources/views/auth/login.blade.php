@@ -16,7 +16,38 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css') }}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
+<script>
+    function validate(ev) {
+            let Name = document.getElementById("userName");
+            let NameErr = document.getElementById("user_nameErr");
+            let Password = document.getElementById("loginPassword");
+            let PasswordErr = document.getElementById("loginPasswordErr");
+            if (Name.value == "" &&  Password.value == "" ) {
+                NameErr.classList.add("text-danger");
+                NameErr.innerHTML = " الرجاء إدخال إسم المستخدم";
+                PasswordErr.classList.add("text-danger");
+                PasswordErr.innerHTML = " الرجاء إدخال كلمة المرور";
+                return false;
+            } else if (Name.value == "" ) {
+                PasswordErr.innerHTML = "";
+                NameErr.classList.add("text-danger");
+                NameErr.innerHTML = " الرجاء إدخال إسم المستخدم";
+                return false;
+            } else if (Password.value == "") {
+                NameErr.innerHTML = "";
+                PasswordErr.classList.add("text-danger");
+                PasswordErr.innerHTML = " الرجاء إدخال كلمة المرور";
+                return false;   
+            }else {
+                NameErr.innerHTML = "";
+                PasswordErr.innerHTML = "";
 
+            }
+
+         
+        return (true);
+    }
+    </script>
 <body>
     <div id="main-wrapper" class="h-100 login-body">
         <div class="container h-100">
@@ -32,24 +63,35 @@
                     <p class="lead text-center mb-4">تسجيل دخول</p>
 
                     <!-- <p class="lead text-center alert alert-danger">خطأ!.. رمز التحقق غير صحيح!!</p>-->
-                    @if(session('message'))
-                    <div class="lead text-center alert alert-danger">
-                        {{ session('message') }}
-                    </div>
-                @endif
 
-                    <form id="loginForm" method="POST" action="/login"  >
+
+                    <form id="loginForm" method="POST" action="/login"  onsubmit="return(validate());">
                         @csrf
                         <div class="vertical-input-group">
 
                             <div class="input-group">
                                 <span class="add-on"><i class="fa fa-user"></i> </span>
-                                <input type="text" name="user_name" class="form-control" id="userName" required placeholder="اسم المستخدم" oninvalid="this.setCustomValidity('الرجاء ادخال اسم المستخدم')">
+                                <input type="text" name="user_name" class="form-control" id="userName" placeholder="اسم المستخدم" >
+                            </div>
+                            <div>
+                                @if(session('user_message'))
+                            
+                                <span class="text-danger" id="user_nameErr">{{ session('user_message') }}</span> 
+                                @else
+                                <span  id="user_nameErr"></span> 
+                                @endif
                             </div>
 
                             <div class="input-group mt-2">
                                 <span class="add-on"><i class="fa fa-key"></i> </span>
-                                <input type="password" name="password" class="form-control" id="loginPassword" required placeholder="كلمة المرور" oninvalid="this.setCustomValidity('الرجاء ادخال كلمة المرور')">
+                                <input type="password" name="password" class="form-control" id="loginPassword"  placeholder="كلمة المرور" >
+                            </div>
+                            <div>
+                                @if(session('password_message'))
+                                    <span class="text-danger"id="loginPasswordErr" >{{ session('password_message') }}</span> 
+                                @else
+                                <span id="loginPasswordErr" ></span> 
+                                @endif
                             </div>
 
                             <div class="form-check form-check-inline mt-1">
@@ -83,4 +125,5 @@
 </html>
 
 <!-- JS -->
-<script type="text/javascript" src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+
+{{-- <script type="text/javascript" src="{{ asset('js/bootstrap.bundle.min.js') }}"></script> --}}

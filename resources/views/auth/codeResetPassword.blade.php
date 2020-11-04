@@ -43,12 +43,11 @@
                                 <span class="add-on"><i class="fa fa-user"></i> </span>
                                 <input type="otp_code" name="otp_code" class="form-control" id="userName"  placeholder="إيميل المستخدم"  autofocus>
                             </div>
-                            @error('otp_code')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-
-
-
+                            <div>
+                                @error('otp_code')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
 
                         <button class="btn btn-primary btn-block shadow-none my-4" type="submit">تأكيد</button>

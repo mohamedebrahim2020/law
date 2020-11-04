@@ -87,19 +87,24 @@ class PasswordResetController extends Controller
         }
     }
      
-    public function set(PasswordRequest $request)
+    public function set(Request $request)
     {
        
         $passwordReset = PasswordReset::where([
-            ['token', $request->token],
             ['email', $request->email]
         ])->first();
-        $user = User::where('email', $passwordReset->email)->first();   
+        $user = User::where('email', $request->email)->first();
+        if (! $user) {
+            return Redirect::back()->with('userMessage','لا يوجد مسنخدم بهذا الإيميل');
+        } elseif (! $passwordReset) {
+            return Redirect::back()->with('passwordMessage','هذا المستخدم لم يطلب تغيير كلمة المرور');
+        } else{  
         $user->password = $request->password;//bcrypt($request->password);
         $user->save();
         $passwordReset->delete();
         $user->notify(new PasswordResetSuccess($passwordReset));
         return response()->json(["user"=>$user,"message"=>"تم تعديل الرقم السري بنجاح"]);
+    }
 
     }
 }
