@@ -40,9 +40,7 @@ Route::group([
     Route::post('set', 'PasswordResetController@set')->name('password.reset');
 });
 // test 
-Route::get('/dashboard', function () {
-    return view('layouts.main');
-});
+
 Route::group([
     'prefix' => 'permission'
 ], function () {

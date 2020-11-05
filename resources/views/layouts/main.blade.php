@@ -116,7 +116,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="img/profile-pic.png" alt="" style="border-radius: 33px;">
-                                <span class="username">عبدالرحمن الوطبان </span>
+                                <span class="username">{{$username}} </span>
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
@@ -124,7 +124,7 @@
                                 <li><a href=""><i class="icon-tasks"></i>&nbsp;المهام&nbsp; </a></li>
                                 <li><a href=""><i class="icon-key"></i>&nbsp;تغيير كلمة المرور</a></li>
                                 <li class="divider"></li>
-                                <li><a href="login.html"><i class="icon-off"></i>&nbsp;تسجيل الخروج </a></li>
+                                <li><a href="/login/page"><i class="icon-off"></i>&nbsp;تسجيل الخروج </a></li>
                             </ul>
                         </li>
 

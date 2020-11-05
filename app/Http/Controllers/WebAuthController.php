@@ -15,6 +15,7 @@ class WebAuthController extends Controller
      * @return \Illuminate\Http\Response 
      */
    
+
         public function login (Request $request) {
             $validator = Validator::make($request->all(), [
                 'user_name' => 'required',
@@ -28,8 +29,7 @@ class WebAuthController extends Controller
             if ($user) {
                 if ($request->password == $user->password) {
                     $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                    $response = ['token' => $token];
-                    return response($response, 200);
+                    return view('layouts.main',['username'=>$user->user_name]);
                 } else {
                     return redirect('/login/page')->with(
                         'user_message', 'أسم المستخدم او كلمة المرور غير صحيحة');
@@ -39,6 +39,8 @@ class WebAuthController extends Controller
                     'user_message', 'أسم المستخدم او كلمة المرور غير صحيحة');
             }
         }
+
+        
 //Hash::check($request->password, $user->password)
     
     }
