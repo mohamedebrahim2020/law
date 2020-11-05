@@ -24,5 +24,5 @@ Route::group([
 ], function () {    
     Route::post('create', 'PasswordResetController@create');
     Route::post('find', 'PasswordResetController@find');
-    Route::post('reset', 'PasswordResetController@reset');
+    Route::post('reset', 'PasswordResetController@set');
 });

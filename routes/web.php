@@ -23,23 +23,33 @@ Route::get('/hima', function () {
 Route::get('/login/page', function () {
     return view('auth.login');
 });
-    Route::get('/invalid/code', function () {
-        return view('auth.codeResetPassword');
-    });
-    Route::get('/invalid/password', function () {
-        return view('auth.resetPassword');
-    });
+Route::get('/invalid/code', function () {
+    return view('auth.codeResetPassword');
+});
+Route::get('/invalid/password', function () {
+    return view('auth.resetPassword');
+});
 
-Route::post('/login','WebAuthController@login')->name('login');
+Route::post('/login', 'WebAuthController@login')->name('login');
 Route::get('/password/page', 'PasswordResetController@showCodeRequestForm')->name('password.request');
-Route::group([           
+Route::group([
     'prefix' => 'password'
-], function () {    
+], function () {
     Route::post('create', 'PasswordResetController@create')->name('password.email');
     Route::post('find', 'PasswordResetController@find')->name('password.code');
     Route::post('set', 'PasswordResetController@set')->name('password.reset');
 });
-
-
-
-
+// test 
+Route::get('/dashboard', function () {
+    return view('layouts.main');
+});
+Route::group([
+    'prefix' => 'permission'
+], function () {
+    Route::get('usersMenu', function () {
+        return view('layouts.permissions.usersMenu');
+    }); 
+    Route::get('createUser', function () {
+        return view('layouts.permissions.createUser');
+    }); 
+});

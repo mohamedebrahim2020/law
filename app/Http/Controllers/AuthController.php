@@ -33,11 +33,11 @@ class AuthController extends Controller
                     $response = ['token' => $token];
                     return response($response, 200);
                 } else {
-                    $response = ["message" => "Password mismatch"];
+                    $response = ["message" => 'أسم المستخدم او كلمة المرور غير صحيحة'];
                     return response($response, 422);
                 }
             } else {
-                $response = ["message" =>'User does not exist'];
+                $response = ["message" =>'أسم المستخدم او كلمة المرور غير صحيحة'];
                 return response($response, 422);
             }
         }

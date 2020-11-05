@@ -95,9 +95,17 @@ class PasswordResetController extends Controller
         ])->first();
         $user = User::where('email', $request->email)->first();
         if (!$user) {
-            return Redirect::back()->with('userMessage','لا يوجد مسنخدم بهذا الإيميل');
+            if( $request->is('api/*')){
+              return response()->json(['userMessage' => 'لا يوجد مسنخدم بهذا الإيميل']);
+            } else {
+            return redirect()->to('/invalid/password')->with('userMessage','لا يوجد مسنخدم بهذا الإيميل');
+        }
         } elseif (! $passwordReset) {
-            return Redirect::back()->with('passwordMessage','هذا المستخدم لم يطلب تغيير كلمة المرور');
+            if( $request->is('api/*')){
+                return response()->json(['passwordMessage' => 'هذا المستخدم لم يطلب تغيير كلمة المرور']);
+              } else {
+            return redirect()->to('/invalid/password')->with('passwordMessage','هذا المستخدم لم يطلب تغيير كلمة المرور');
+        }
         } else{  
         $user->password = $request->password;//bcrypt($request->password);
         $user->save();
