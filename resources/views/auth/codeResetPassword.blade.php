@@ -13,7 +13,7 @@
     <!-- Stylesheet
 ============================================= -->
     <link rel="stylesheet" type="text/css" href="{{ asset('js/bootstrap.min.css') }}" />
-    <link rel="stylesheet" type="text/css" href= "{{ asset('css/style.css') }}" />
+    <link rel="stylesheet" type="text/css" href= "{{ asset('css/loginStyle.css') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
@@ -28,7 +28,7 @@
                 <div class="col-11 col-sm-9 col-md-7 col-lg-5 col-xl-4 m-auto py-5">
                     <div class="logo text-center">
                         <a href="login.html" title="Smart Loyar">
-                            <img class="logo-sm" src="{{ asset('img/logo.png') }}" alt="logo">
+                            <img class="logo-sm" src="{{ asset('img/logo1.png') }}" alt="logo">
                         </a>
                     </div>
                     <p class="lead text-center mb-4">إكتب رمز التحقق</p>
