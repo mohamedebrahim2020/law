@@ -353,21 +353,23 @@
                                                     <center>تعديل</center>
                                                 </th>
                                             </tr>
+                                            @foreach ($users as $employee)
                                             <tr>
                                                 <td>
                                                     <center>1</center>
                                                 </td>
                                                 <td>
                                                     <img src="{{asset('img/emp.png')}}" alig />
-                                                    DATA
+                                                    {{$employee->employee->name}}
                                                 </td>
-                                                <td>DATA</td>
+                                                <td>{{$employee->getRoleNames()}}</td>
                                                 <td>
                                                     <center>
                                                         <input type="image" title="تعديل" src="{{asset('img/edit.png')}}" />
                                                     </center>
                                                 </td>
                                             </tr>
+                                            @endforeach
                                         </table>
                                     </div>
                                 </div>

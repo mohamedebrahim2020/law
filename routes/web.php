@@ -44,10 +44,13 @@ Route::group([
 Route::group([
     'prefix' => 'permission'
 ], function () {
-    Route::get('usersMenu', function () {
-        return view('layouts.permissions.usersMenu');
-    }); 
-    Route::get('createUser', function () {
-        return view('layouts.permissions.createUser');
-    }); 
+    Route::get('usersMenu','UserController@get_users_table');
+    Route::get('createUser','UserController@get_employees_groups');
+    Route::post('store','UserController@storeUser'); 
 });
+
+// get employees and group list
+//Route::get('/employees/groups', 'UserController@get_employees_groups');
+
+
+

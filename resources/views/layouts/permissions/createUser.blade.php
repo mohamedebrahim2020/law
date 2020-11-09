@@ -34,7 +34,7 @@
             <div class="container-fluid">
 
                 <a class="brand" class="center" href="dashboard.html" style="text-align: center;">
-                    <img class="logo" src="img/logo.png" alt="Logo" style="margin-top: -10px; margin-bottom: -10px; padding-left: 2px !important;" />
+                    <img class="logo" src="{{asset('img/logo.png')}}" alt="Logo" style="margin-top: -10px; margin-bottom: -10px; padding-left: 2px !important;" />
                 </a>
 
                 <a class="btn btn-navbar collapsed" id="main_menu_trigger" data-toggle="collapse" data-target=".nav-collapse">
@@ -90,8 +90,8 @@
                         <div class="circle">
                             <div> <span class="time" id="display">00:00:00</span></div>
                             <button class="buttonPlay">
-                                <img id="playButton" src="img/play.png" />
-                                <img id="pauseButton" src="img/pause.png" />
+                                <img id="playButton" src="{{asset('img/play.png')}}" />
+                                <img id="pauseButton" src="{{asset('img/pause.png')}}" />
                             </button>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="img/profile-pic.png" alt="" style="border-radius: 33px;">
+                                <img src="{{asset('img/profile-pic.png')}}" alt="" style="border-radius: 33px;">
                                 <span class="username">عبدالرحمن الوطبان </span>
                                 <b class="caret"></b>
                             </a>
@@ -339,55 +339,85 @@
                                 <div class="widget-title">
                                     <h4>&nbsp;مستخدم جديد</h4>
                                 </div>
-
+                                <form id="" method="POST" action="/permission/store" >
+                                    @csrf
                                 <div class="widget-body form">
                                     <div class="form-horizontal">
 
                                         <div class="control-group">
                                             <label class="control-label">اختيار الموظف<span class="required">*</span></label>
                                             <div class="controls">
-                                                <select name="" class="span6">
-                                                    <option selected="selected" value="-1">--اختر--</option>
+                                                <select name="employee" class="span6">
+                                                    <option  value="">--اختر--</option>
+                                                    @foreach($employees   as $employee)
+                                                    @if (old('employee') == $employee->id)
+                                                    <option  value="{{$employee->id}}" selected="selected">{{$employee->name}}</option>
+                                                    @else
+                                                    <option  value="{{$employee->id}}">{{$employee->name}}</option>
+                                                    @endif
+                                                    @endforeach
                                                 </select>
+                                                @error('employee')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
                                         <div class="control-group">
                                             <label class="control-label">اختيار المجموعة<span class="required">*</span></label>
                                             <div class="controls">
-                                                <select class="span6">
-                                                    <option selected="selected" value="-1">--اختر--</option>
-                                                    <option value="1">مجموعة مدير النظام</option>
-                                                    <option value="2">مجموعة المستخدمين</option>
+                                                <select name="role" class="span6">
+                                                    <option  value="">--اختر--</option>
+                                                    @foreach($roles   as $role)
+                                                    @if (old('role') == $role->id)
+                                                    <option  value="{{$role->id}}" selected="selected" >{{$role->name}}</option>
+                                                    @else
+                                                    <option  value="{{$role->id}}"  >{{$role->name}}</option>
+                                                    @endif
+                                                    @endforeach
                                                 </select>
+                                                @error('role')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
                                         <div class="control-group">
                                             <label class="control-label">اسم الدخول<span class="required">*</span></label>
                                             <div class="controls">
-                                                <input type="text" class="span6" autocomplete="Off" />
+                                                <input type="text" name="user_name" value="{{  old('user_name') }}" class="span6" autocomplete="Off" />
+                                            </div>
+                                            <div>
+                                                @error('user_name')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
                                         <div class="control-group">
                                             <label class="control-label">كلمة المرور<span class="required">*</span></label>
                                             <div class="controls">
-                                                <input type="password" class="span6" />
+                                                <input type="password" name="password" class="span6" />
                                                 <br/> 
+                                            </div>
+                                            <div>
+                                                @error('password')
+                                                <span class="text-danger">{{ $message }}</span>
+                                                @enderror
                                             </div>
                                         </div>
 
                                         <div class="control-group">
                                             <label class="control-label">تأكيد كلمة المرور<span class="required">*</span></label>
                                             <div class="controls">
-                                                <input type="password" class="span6" />
+                                                <input type="password" name="password_confirmation" class="span6" />
                                             </div>
                                         </div>
 
                                         <div class="form-actions">
                                             <div class="btn-group">
-                                                <a class="btn b-w-m btn-primary" href=""><span class="icon-ok icon-white"></span>&nbsp;حـفــظ</a>
+                                                {{-- <a class="btn b-w-m btn-primary" href=""><span class="icon-ok icon-white"></span>&nbsp;حـفــظ</a> --}}
+                                                <button class="btn btn-primary btn-block shadow-none my-4" type="submit">&nbsp;حـفــظ</button>
                                             </div>
                                             <div class="btn-group">
                                                 <a class="btn btn-warning" href=""><span class="icon-ban-circle icon-white"></span>&nbsp;خـروج</a>
@@ -396,6 +426,7 @@
 
                                     </div>
                                 </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -411,14 +442,16 @@
     </div>
 
     <!-- Load javascripts at bottom, this will reduce page load time -->
-    <script src="js/jquery-1.8.3.min.js"></script>
-    <script src="css/plugins/bootstrap-rtl/js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="{{asset('js/jquery-1.8.3.min.js')}}"></script>
+    <script src="{{asset('css/plugins/bootstrap-rtl/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('js/main.js')}}"></script>
     <script>
         jQuery(document).ready(function() {
             // initiate layout and plugins 
             App.init();
+
         });
+
 
         // Convert time to a format of hours, minutes, seconds, and milliseconds
 
@@ -489,11 +522,11 @@
 
         let playButton = document.getElementById("playButton");
         let pauseButton = document.getElementById("pauseButton");
-        let resetButton = document.getElementById("resetButton");
+       // let resetButton = document.getElementById("resetButton");
 
         playButton.addEventListener("click", start);
         pauseButton.addEventListener("click", pause);
-        resetButton.addEventListener("click", reset);
+       // resetButton.addEventListener("click", reset);
 
     </script>
 </body>

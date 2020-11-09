@@ -26,3 +26,12 @@ Route::group([
     Route::post('find', 'PasswordResetController@find');
     Route::post('reset', 'PasswordResetController@set');
 });
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'permission'
+], function () {
+    Route::get('usersMenu','UserController@get_users_table');
+    Route::get('createUser','UserController@get_employees_groups');
+    Route::post('store','UserController@storeUser'); 
+});
