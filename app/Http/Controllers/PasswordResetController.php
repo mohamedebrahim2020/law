@@ -45,18 +45,17 @@ class PasswordResetController extends Controller
                 'updated_at'=> now(),
             ]
         );
-        if ($user && $passwordReset)
-            $user->notify(
-                new PasswordResetRequest($passwordReset->otp_token)
-            );
-        if( $request->is('api/*') || $request->wantsJson()){    
-        return response()->json([
-            'message' => 'تم إرسال رمز التتبع علي الايميل',
-            
-        ]);
-        } else{
-            return redirect('/invalid/code')->with('message','تم إرسال رمز التتبع علي الايميل');
-        }
+        if ($user && $passwordReset){
+            $user->notify(new PasswordResetRequest($passwordReset->otp_token));
+            if( $request->is('api/*') || $request->wantsJson()){    
+                return response()->json([
+                    'message' => 'تم إرسال رمز التتبع علي الايميل',
+                    
+                ]);
+            } else {
+                    return redirect('/invalid/code')->with('message','تم إرسال رمز التتبع علي الايميل');
+                }
+            }
     }
     /**
      * Find token password reset
