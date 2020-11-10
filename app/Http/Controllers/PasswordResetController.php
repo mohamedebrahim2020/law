@@ -12,6 +12,7 @@ use App\Notifications\PasswordResetRequest;
 use App\Notifications\PasswordResetSuccess;
 use App\User;
 use App\PasswordReset;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
@@ -28,14 +29,8 @@ class PasswordResetController extends Controller
      */
     public function create(EmailRequest $request)
     {
-      
-         $user = User::where('email', $request->email)->first();
-        // if (!$user)
-        // if( $request->is('api/*') || $request->wantsJson()){
-        //     return response()->json([
-        //         'message' => "لا يوجد مستخدم بهذا البريد الإلكتروني"
-        //     ], 404);
-        // }     
+        DB::transaction(function () use ($request) {
+         $user = User::where('email', $request->email)->first();   
         $passwordReset = PasswordReset::updateOrCreate(
             ['email' => $user->email],
             [
@@ -56,6 +51,7 @@ class PasswordResetController extends Controller
                     return redirect('/invalid/code')->with('message','تم إرسال رمز التتبع علي الايميل');
                 }
             }
+        }, 1);    
     }
     /**
      * Find token password reset
