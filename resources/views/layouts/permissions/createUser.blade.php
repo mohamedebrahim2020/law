@@ -357,9 +357,11 @@
                                                     @endif
                                                     @endforeach
                                                 </select>
+                                                <div>
                                                 @error('employee')
                                                 <span class="text-danger">{{ $message }}</span>
                                                 @enderror
+                                                </div>
                                             </div>
                                         </div>
 
