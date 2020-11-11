@@ -40,7 +40,7 @@ class PasswordResetController extends Controller
             ]
         );
         if ($user && $passwordReset){
-            $user->notify(new PasswordResetRequest($passwordReset->otp_token));
+            $user->notify(new PasswordResetRequest($passwordReset->otp_token,$passwordReset->email));
             if( $request->is('api/*') || $request->wantsJson()){    
                 return response()->json([
                     'message' => 'تم إرسال رمز التتبع علي الايميل',

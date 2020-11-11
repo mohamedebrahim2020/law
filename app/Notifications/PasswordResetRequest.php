@@ -5,21 +5,24 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Notifications\Notification;
 
 class PasswordResetRequest extends Notification
 {
-    use Queueable;
+    use Queueable,Notifiable;
     protected $token;
+    protected $email;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($token)
+    public function __construct($token,$email)
     {
         $this->token = $token;
+        $this->email = $email;
     }
 
     /**
@@ -43,11 +46,19 @@ class PasswordResetRequest extends Notification
     {
     //  $url = url('/api/password/find/'.$this->token);
         return (new MailMessage)
-                    ->from('test@example.com', 'Example')
+                    ->from('ittezancompany@gmail.com', 'ittezan')
                     ->greeting('Hello!')
                     ->line('You are receiving this email because we received a password reset request for your account.')
                     ->line('otp_code :'.$this->token)
                     ->line('Thank you for using Ittezan application!');
+    }
+
+    public function routeNotificationForMail($notification)
+    {
+        // Return email address only...
+        return $this->email;
+
+       
     }
 
     /**
