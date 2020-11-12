@@ -6,10 +6,20 @@ use App\Employee;
 use App\Http\Requests\StoreUserRequest;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+    use Notifiable;
+    public function routeNotificationForMail($notification)
+    {
+        // Return email address only...
+        return $this->email_address;
+
+        // Return name and email address...
+       // return [$this->email_address => $this->name];
+    }
     public function get_employees_groups(){
         $employees = Employee::whereDoesntHave('user')->get(['id','name']);
         $roles = Role::get(['id','name']);

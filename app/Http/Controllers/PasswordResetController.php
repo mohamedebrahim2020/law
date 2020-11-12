@@ -12,6 +12,7 @@ use App\Notifications\PasswordResetRequest;
 use App\Notifications\PasswordResetSuccess;
 use App\User;
 use App\PasswordReset;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 
@@ -40,7 +41,7 @@ class PasswordResetController extends Controller
             ]
         );
         if ($user && $passwordReset){
-            $user->notify(new PasswordResetRequest($passwordReset->otp_token,$passwordReset->email));
+            Mail::to($user->email)->send(new \App\Mail\PasswordResetCodeMail($passwordReset));
             if( $request->is('api/*') || $request->wantsJson()){    
                 return response()->json([
                     'message' => 'تم إرسال رمز التتبع علي الايميل',

@@ -10,7 +10,7 @@ use Illuminate\Notifications\Notification;
 
 class PasswordResetRequest extends Notification
 {
-    use Queueable,Notifiable;
+    use Queueable;
     protected $token;
     protected $email;
 
@@ -19,10 +19,10 @@ class PasswordResetRequest extends Notification
      *
      * @return void
      */
-    public function __construct($token,$email)
+    public function __construct($token)
     {
         $this->token = $token;
-        $this->email = $email;
+       
     }
 
     /**
@@ -53,13 +53,7 @@ class PasswordResetRequest extends Notification
                     ->line('Thank you for using Ittezan application!');
     }
 
-    public function routeNotificationForMail($notification)
-    {
-        // Return email address only...
-        return $this->email;
-
-       
-    }
+    
 
     /**
      * Get the array representation of the notification.
