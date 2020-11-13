@@ -29,7 +29,7 @@ class WebAuthController extends Controller
             if ($user) {
                 if ($request->password == $user->password) {
                     $token = $user->createToken('Laravel Password Grant Client')->accessToken;
-                    return view('layouts.main',['username'=>$user->user_name]);
+                    return view('layouts.main',['user'=>$user]);
                 } else {
                     return redirect('/login/page')->with(
                         'user_message', 'أسم المستخدم او كلمة المرور غير صحيحة');
@@ -38,6 +38,15 @@ class WebAuthController extends Controller
                 return redirect('/login/page')->with(
                     'user_message', 'أسم المستخدم او كلمة المرور غير صحيحة');
             }
+        }
+
+        public function logout(Request $request){
+            dd($request);
+           // $token = $request->user()->token();
+            //$token->revoke();
+            return redirect('/login/page');
+        
+
         }
 
         

@@ -31,7 +31,15 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'permission'
 ], function () {
-    Route::get('usersMenu','UserController@get_users_table');
-    Route::get('createUser','UserController@get_employees_groups');
-    Route::post('store','UserController@storeUser'); 
+    Route::get('usersMenu','UserController@get_users_role');
+    Route::get('getEmployees/notUser','UserController@employees_notUser');
+    Route::get('getEmployees/areUser','UserController@employees_areUser');
+    Route::get('getUsers','UserController@allUsers');
+    Route::get('getEmployees','UserController@allEmployees');
+    Route::get('getRoles','UserController@allRoles');
+    Route::post('create/user','UserController@storeUser'); 
+    Route::post('create/group','UserController@storeGroup');
+    Route::delete('delete/user/{id}', 'UserController@destroyUser');
+    Route::delete('delete/role/{id}', 'UserController@destroyRole');
+
 });

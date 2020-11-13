@@ -16,13 +16,13 @@
     <link href="{{asset('css/plugins/bootstrap-rtl/css/bootstrap-responsive-rtl.min.css')}}" rel="stylesheet" />
 
     <!--Main Stylesheet-->
-    <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    <link href="{{asset('css/style.css')}}" rel="stylesheet" />
 
     <!--Font Awesome-->
     <link href="{{asset('css/font-awesome/css/font-awesome.css')}}" rel="stylesheet" />
 
     <!--Plugins-->
-    <link href="{{asset('css/plugins/fancybox/source/jquery.fancybox.css')}}" rel="stylesheet"/>
+    <link href="{{asset('css/plugins/fancybox/source/jquery.fancybox.css')}}" rel="stylesheet" />
 
 </head>
 
@@ -34,7 +34,7 @@
             <div class="container-fluid">
 
                 <a class="brand" class="center" href="dashboard.html" style="text-align: center;">
-                    <img class="logo" src="img/logo.png" alt="Logo" style="margin-top: -10px; margin-bottom: -10px; padding-left: 2px !important;" />
+                    <img class="logo" src="{{asset('img/logo.png')}}" alt="Logo" style="margin-top: -10px; margin-bottom: -10px; padding-left: 2px !important;" />
                 </a>
 
                 <a class="btn btn-navbar collapsed" id="main_menu_trigger" data-toggle="collapse" data-target=".nav-collapse">
@@ -97,7 +97,6 @@
                     </div>
                 </div>
 
-
                 <div class="top-nav">
                     <ul class="nav pull-left top-menu">
 
@@ -116,7 +115,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="img/profile-pic.png" alt="" style="border-radius: 33px;">
-                                <span class="username">{{$user->user_name}} </span>
+                                <span class="username">عبدالرحمن الوطبان </span>
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
@@ -124,7 +123,7 @@
                                 <li><a href=""><i class="icon-tasks"></i>&nbsp;المهام&nbsp; </a></li>
                                 <li><a href=""><i class="icon-key"></i>&nbsp;تغيير كلمة المرور</a></li>
                                 <li class="divider"></li>
-                            <li><a href="/logout"><i class="icon-off"></i>&nbsp;تسجيل الخروج </a></li>
+                                <li><a href="login.html"><i class="icon-off"></i>&nbsp;تسجيل الخروج </a></li>
                             </ul>
                         </li>
 
@@ -143,7 +142,7 @@
             <div class="sidebar-toggler hidden-phone"></div>
 
             <ul class="sidebar-menu ">
-                <li class="has-sub active">
+                <li class="has-sub">
                     <a href="dashboard.blade.html" class="">
                         <span class="icon-box"><i class="icon-dashboard"></i></span>اللوحة الرئيسة
                     </a>
@@ -276,14 +275,14 @@
                         <li><a class="" href="">سجل الوارد </a></li>
                     </ul>
                 </li>
-                <li class="has-sub">
+                <li class="has-sub active open">
                     <a href="javascript:void(0);" class="">
                         <span class="icon-box"><i class="icon-bookmark"></i></span>الصلاحيات
                         <span class="arrow"></span>
                     </a>
                     <ul class="sub">
-                        <li><a class="ui-icon-person" href="/permission/usersMenu">قائمة المستخدمين</a></li>
-                        <li><a class="ui-icon-person" href="/permission/groupsMenu">مجموعات المستخدمين</a></li>
+                        <li><a class="ui-icon-person" href="userList.blade.html">قائمة المستخدمين</a></li>
+                        <li class="active"><a class="ui-icon-person" href="usersGroups.blade.html">مجموعات المستخدمين</a></li>
                         <li><a class="ui-icon-person" href="privilegesPagesUsers.blade.html">صـلاحيات المجموعات</a></li>
                     </ul>
                 </li>
@@ -313,152 +312,87 @@
             <div class="container-fluid">
                 <div class="row-fluid">
                     <div class="span12">
-                        <h3 class="page-title">
-                            اللوحة الرئيسة
-                            <small>ملخص العمليات</small>
+                        <h3 class="page-title">مجموعات المستخدمين
+                            <small>مجموعات النظام </small>
                         </h3>
                         <ul class="breadcrumb">
                             <li>
                                 <a href="#"><i class="icon-home"></i></a><span class="divider">&nbsp;</span>
                             </li>
                             <li>
-                                <a href="#">اللوحة الرئيسة</a> <span class="divider">&nbsp;</span>
+                                <a href="#"> الصلاحيات</a> <span class="divider">&nbsp;</span>
                             </li>
-                            <li class="pull-right search-wrap">
-                                <div class="btn-group">
-                                <button class="btn btn-primary" type="button">
-                                    <span class="icon-plus white-color"></span> اضافة اعلان
-                                </button>
-                                </div>
+                            <li>
+                                <a href="usersGroups.blade.html">مجموعات المستخدمين</a> <span class="divider">&nbsp;</span>
+                            </li>
+                            <li>
+                                <a href="groupAdd.blade.html">اضافة مجموعة</a> <span class="divider">&nbsp;</span>
                             </li>
                         </ul>
                     </div>
                 </div>
 
-                <div class="dashboard">
+                <div id="page">
+                    <div class="row-fluid">  
+                        <div class="widget space-vert-15">
+                            
+                                <div class="widget-title">
+                                    <h4>&nbsp;اضافة مجموعة  </h4>
+                                </div>
+                                <form id="" method="POST" action="/permission/create/group" >
+                                    @csrf
+                            <div class="widget-body form">
+                                <div class="form-horizontal">
 
-                    <div class="alert alert-info">
-                        <button data-dismiss="alert" class="close">×</button>
-                        !لديك إشعار جديد
-                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label">اسم المجموعة</label>
+                                        <div class="controls">
+                                            <input type="text" name="role" class="span6" />
+                                        </div>
+                                        <div>
+                                            @error('role')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
 
-                    <div class="square-state">
+                                    <div class="control-group">
+                                        <label class="control-label">وصف المجموعة</label>
+                                        <div class="controls">
+                                            <input type="text" name="description" class="span6" />
+                                        </div>
+                                        <div>
+                                            @error('description')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
 
-                        <div>
-                            <div class="row-fluid">
+                                    <div class="control-group">
+                                        <label class="control-label"></label>
+                                        <div class="controls">
+                                            <span class="checkbox span6"><input type="checkbox" name="active" /><label for="1">نــشـط</label></span>
+                                        </div>
+                                    </div>
 
-                                <a href="" class="icon-btn span2">
-                                    <i class="icon-book"></i>
-                                    <div>المشاريع</div>
-                                    <span class="badge badge-info"><strong>3</strong></span>
-                                </a>
+                                    <div class="form-actions">
+                                            <div class="btn-group">
+                                                <button class="btn btn-primary btn-block shadow-none my-4" type="submit">&nbsp;حـفــظ</button>
+                                            </div>
+                                            <div class="btn-group">
+                                                <a class="btn btn-warning" href=""><span class="icon-ban-circle icon-white"></span>&nbsp;الغاء</a>
+                                            </div>
+                                    </div>
 
-                                <a href="" class="icon-btn span2">
-                                    <i class="icon-tasks"></i>
-                                    <div>المهام غير المنجزة </div>
-                                    <span class="badge badge-important"><strong>11</strong></span>
-                                </a>
-
-                                <a href="" class="icon-btn span2">
-                                    <i class="icon-check"></i>
-                                    <div>المهام المنجزة</div>
-                                    <span class="badge badge-success"><strong>1</strong></span>
-                                </a>
-
-                                <a href="" class="icon-btn span2">
-                                    <i class="icon-legal"></i>
-                                    <div>جلسات بالانتظار</div>
-                                    <span class="badge badge-warning"><strong>1</strong></span>
-                                </a>
-
-                                <a href="" class="icon-btn span2">
-                                    <i class="icon-folder-close"></i>
-                                    <div>جلسات سابقة</div>
-                                    <span class="badge  badge-inverse"><strong>6</strong></span>
-                                </a>
-
-                                <a href="" class="icon-btn span2">
-                                    <i class="icon-calendar"></i>
-                                    <div>التقويم</div>
-                                </a>
-
-
-                                <a href="" class="icon-btn span2">
-                                    <i class="icon-money"></i>
-                                    <div>الفواتير</div>
-                                    <span class="badge badge-warning"><strong>6</strong></span>
-                                </a>
-
-
-                                <a href="" class="icon-btn span2">
-                                    <i class="icon-retweet"></i>
-                                    <div>الاجراءات</div>
-                                    <span style="font-family: 'cairo'; font-weight: 700;" class="badge badge-success">جديد</span>
-                                </a>
-
-                                <a href="" class="icon-btn span2">
-                                    <i class="icon-list"></i>
-                                    <div>المواعيد</div>
-                                    <span class="badge badge-important"><strong>0</strong></span>
-                                </a>
-
-                                <a href="" class="icon-btn span2">
-                                    <i class="icon-money"></i>
-                                    <div>طلبات الصرف</div>
-                                    <span class="badge badge-info">
-                                        <span><strong>1</strong></span></span>
-                                </a>
-
-                                <a href="" class="icon-btn span2">
-                                    <i class="icon-plane"></i>
-                                    <div>طلبات الإجازات</div>
-                                    <span class="badge badge-warning"><strong>0</strong></span>
-                                </a>
-
-
-                                <a href="" class="icon-btn span2">
-                                    <i class="icon-time"></i>
-                                    <div>اذونات الخروج</div>
-                                    <span class="badge badge-important"><strong>0</strong></span>
-                                </a>
-
-                                <a href="" class="icon-btn span2">
-                                    <i class="icon-bar-chart"></i>
-                                    <div>الاحصائيات</div>
-                                </a>
-
-
-                                <a href="" class="icon-btn span2">
-                                    <i class="icon-search"></i>
-                                    <div>مركز البحث</div>
-                                </a>
-
-                                <a href="" class="icon-btn span2">
-                                    <i class=" icon-cog"></i>
-                                    <div>الاعدادات </div>
-                                </a>
-
-                                <a href="" class="icon-btn span2">
-                                    <i class=" icon-envelope"></i>
-                                    <div>الدعم الفني</div>
-                                </a>
-
-                                <a href="" class="icon-btn span2">
-                                    <i class="icon-exclamation-sign"></i>
-                                    <div>شرح البرنامج</div>
-
-                                </a>
-
-
-                                <a href="" class="icon-btn span2">
-                                    <i class="icon-list-alt"></i>
-                                    <div>التقارير </div>
-                                </a>
-
+                                </div>
                             </div>
+                            </form>
+
                         </div>
+
                     </div>
                 </div>
+
             </div>
         </div>
         <!--PAGE CONTENT END============================================================================-->
@@ -472,7 +406,7 @@
     <!-- Load javascripts at bottom, this will reduce page load time -->
     <script src="{{asset('js/jquery-1.8.3.min.js')}}"></script>
     <script src="{{asset('css/plugins/bootstrap-rtl/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('js/main.js')}}"></script>
+    <script src="{{asset('js/main.j')}}s"></script>
     <script>
         jQuery(document).ready(function() {
             // initiate layout and plugins 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddEmailToEmployeesTable extends Migration
+class AddDescriptionToRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddEmailToEmployeesTable extends Migration
      */
     public function up()
     {
-        Schema::table('employees', function (Blueprint $table) {
-            $table->string('email')->unique()->nullable(
-            );
+        Schema::table('roles', function (Blueprint $table) {
+            $table->string('description')->nullable();
         });
     }
 
@@ -26,8 +25,8 @@ class AddEmailToEmployeesTable extends Migration
      */
     public function down()
     {
-        Schema::table('employees', function (Blueprint $table) {
-            
+        Schema::table('roles', function (Blueprint $table) {
+            //
         });
     }
 }

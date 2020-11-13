@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
+use App\Http\Requests\GroupAddRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\User;
 use Illuminate\Http\Request;
@@ -12,14 +13,6 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
     use Notifiable;
-    public function routeNotificationForMail($notification)
-    {
-        // Return email address only...
-        return $this->email_address;
-
-        // Return name and email address...
-       // return [$this->email_address => $this->name];
-    }
     public function get_employees_groups(){
         $employees = Employee::whereDoesntHave('user')->get(['id','name']);
         $roles = Role::get(['id','name']);
@@ -48,10 +41,102 @@ class UserController extends Controller
     public function get_users_table(){
         
         $users = User::with('employee')->with('roles')->get();
+        // dd($users);
         if (request()->is('api*')) {
           return response()->json(['users'=>$users]);
         } else {
           return view('layouts.permissions.usersMenu',['users'=>$users]);
     }
+    }
+
+    public function get_groups_table(){
+        $groups = Role::all();
+        return view('layouts.permissions.usersGroups',['groups'=>$groups]);
+    }
+
+    public function get_groups(){
+        return view('layouts.permissions.groupAdd');
+    }
+
+    public function storeGroup(GroupAddRequest $request){
+       // dd($request);
+      if ($request->active == "on") {
+        $role = Role::create([
+            'name' => $request->role,
+            'description' => $request->description,
+            'Active' => 'yes',
+        ]);
+      } else {
+        $role = Role::create([
+            'name' => $request->role,
+            'description' => $request->description,
+            'Active' => 'no',
+            
+        ]);
+      }
+      if (request()->is('api*')) {
+         return response()->json(["role"=>$role,"message"=>"تم إضافة المجموعة بنجاح"],200);
+      } else {
+        return redirect('permission/groupsMenu');
+      }
+      
+    }
+
+    // API's
+
+    public function employees_notUser(){
+        $employees = Employee::whereDoesntHave('user')->get();
+        return response()->json($employees,200);
+    }
+
+    public function employees_areUser(){
+        $employees = Employee::has('user')->get();
+        return response()->json($employees,200);
+    }
+
+    public function allUsers(){
+        $Users = User::all();
+        return response()->json($Users,200); 
+    }
+
+    public function allEmployees(){
+        $employees = Employee::all();
+        return response()->json($employees,200);
+    }
+
+    public function allRoles(){
+        $roles = Role::all();
+        return response()->json($roles,200);
+    }
+
+    public function get_users_role(){
+        $users = User::with('roles')->get();
+        $usersRoles = [];
+        foreach($users as $user){
+            $roles= $user->roles->pluck('name');
+            $role= $roles[0];
+            $usersRoles += ["$user->id"=> [$user->employee->name,$role]];
+        }
+        return response()->json($usersRoles);
+    }
+
+    public function destroyUser($id){
+        $user = User::find($id);
+        if ($user == null) {
+           return response()->json(["message"=>"هذا المستخدم غير موجودة "],500);
+        } else {  
+        $deleteduser = $user->delete();
+        return response()->json(["deleteduser"=>$user,"message"=>"تم حذف المستخدم بنجاح"],200);
+       } 
+    }
+
+    public function destroyRole($id){
+     $role = Role::find($id);
+     if ($role == null) {
+        return response()->json(["message"=>"هذة المجموعة غير موجودة "],500);
+     } else {  
+     $deletedRole = $role->delete();
+     return response()->json(["deletedRole"=>$role,"message"=>"تم حذف المستخدم بنجاح"],200);
+    }  
     }
 }

@@ -46,4 +46,8 @@ class User extends Authenticatable implements CanResetPassword
     public function employee(){
         return $this->belongsTo('App\Employee');
     }
+
+    public function role(){
+        return $this->belongsTo('Spatie\Permission\Models\Role');
+    }
 }

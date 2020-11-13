@@ -362,7 +362,7 @@
                                                     <img src="{{asset('img/emp.png')}}" alig />
                                                     {{$employee->employee->name}}
                                                 </td>
-                                                <td>{{$employee->getRoleNames()}}</td>
+                                                <td>{{$employee->roles->pluck('name')}}</td>
                                                 <td>
                                                     <center>
                                                         <input type="image" title="تعديل" src="{{asset('img/edit.png')}}" />

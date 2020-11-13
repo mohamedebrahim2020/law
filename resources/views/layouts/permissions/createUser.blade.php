@@ -339,7 +339,7 @@
                                 <div class="widget-title">
                                     <h4>&nbsp;مستخدم جديد</h4>
                                 </div>
-                                <form id="" method="POST" action="/permission/store" >
+                                <form id="adduser" method="POST" action="/permission/store" >
                                     @csrf
                                 <div class="widget-body form">
                                     <div class="form-horizontal">

@@ -50,7 +50,7 @@ class PasswordResetController extends Controller
             } else {
                     return redirect('/invalid/code')->with('message','تم إرسال رمز التتبع علي الايميل');
                 }
-            }
+        }
     }
     /**
      * Find token password reset
