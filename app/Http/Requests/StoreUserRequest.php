@@ -24,7 +24,7 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'employee' => 'required|exists:App\Employee,id',
+            'employee_id' => 'required|exists:App\Employee,id',
             'role' => 'required|exists:roles,id',
             'user_name' => 'required|unique:users,user_name',
             'password' => 'required|confirmed',

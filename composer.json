@@ -16,7 +16,6 @@
         "laravel/nexmo-notification-channel": "^2.4",
         "laravel/passport": "~9.0",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "2.4",
         "nesbot/carbon": "^2.41",
         "spatie/laravel-permission": "^3.17"
     },

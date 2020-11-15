@@ -32,7 +32,7 @@ class GroupAddRequest extends FormRequest
     {
         return [
             'role.required' =>"الرجاء اختيار اسم المجموعة",
-            'role.unique'=>"هذا الاسم مستخدم بالفعل",
+            'role.unique'=>"هذالمجموعة موجودة بالفعل",
             'description.required'=>"الرجاء كتابة الوصف",
           
         ];

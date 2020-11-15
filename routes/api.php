@@ -41,5 +41,7 @@ Route::group([
     Route::post('create/group','UserController@storeGroup');
     Route::delete('delete/user/{id}', 'UserController@destroyUser');
     Route::delete('delete/role/{id}', 'UserController@destroyRole');
+    Route::put('update/user', 'UserController@updateUser');
+
 
 });

@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Auth::routes(['verify' => true]);
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -31,8 +30,11 @@ Route::get('/invalid/code', function () {
 Route::get('/invalid/password', function () {
     return view('auth.resetPassword');
 });
+Route::get('/dashboard/page',function (){
+    return view('layouts.main'); 
+});
 
-Route::post('/login', 'WebAuthController@login')->name('login');
+Route::post('/login', 'WebAuthController@login');
 Route::get('/password/page', 'PasswordResetController@showCodeRequestForm')->name('password.request');
 Route::group([
     'prefix' => 'password'
@@ -58,6 +60,5 @@ Route::group([
 
 // get employees and group list
 //Route::get('/employees/groups', 'UserController@get_employees_groups');
-
 
 

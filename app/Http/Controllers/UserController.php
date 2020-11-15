@@ -95,7 +95,7 @@ class UserController extends Controller
     }
 
     public function allUsers(){
-        $Users = User::all();
+        $Users = User::with('employee')->with('roles')->get();
         return response()->json($Users,200); 
     }
 
@@ -122,12 +122,13 @@ class UserController extends Controller
 
     public function destroyUser($id){
         $user = User::find($id);
-        if ($user == null) {
-           return response()->json(["message"=>"هذا المستخدم غير موجودة "],500);
-        } else {  
-        $deleteduser = $user->delete();
-        return response()->json(["deleteduser"=>$user,"message"=>"تم حذف المستخدم بنجاح"],200);
-       } 
+        return response()->json($user);
+    //     if ($user == null) {
+    //        return response()->json(["message"=>"هذا المستخدم غير موجودة "],500);
+    //     } else {  
+    //     $deleteduser = $user->delete();
+    //     return response()->json(["deleteduser"=>$user,"message"=>"تم حذف المستخدم بنجاح"],200);
+    //    } 
     }
 
     public function destroyRole($id){
@@ -136,7 +137,33 @@ class UserController extends Controller
         return response()->json(["message"=>"هذة المجموعة غير موجودة "],500);
      } else {  
      $deletedRole = $role->delete();
-     return response()->json(["deletedRole"=>$role,"message"=>"تم حذف المستخدم بنجاح"],200);
+     return response()->json(["deletedRole"=>$role,"message"=>"تم حذف المجموعة بنجاح"],200);
     }  
+    }
+
+    public function updateUser(Request $request){
+      //dd($request->employee);
+      $employee =$request->employee;
+      foreach($employee as $employee =>$one){
+        $employee_id = $one;
+      }
+
+      $role = $request->role;
+      foreach($role as $role =>$one){
+        $role_id = $one;
+    }
+      $user = User::find($request->id);
+      $user->roles()->detach();
+      $user->user_name = $request->user_name;
+      $user->email = $request->email;
+      $user->employee_id = $employee_id;
+      $user->password = $request->password;
+      $user->assignRole($role_id);
+      $user->save();
+
+
+      return response()->json(['user'=>$user,'message'=>'لقد تم تعديل البيانات بنجاح']);
+    
+
     }
 }

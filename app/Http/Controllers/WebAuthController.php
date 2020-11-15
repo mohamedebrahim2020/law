@@ -41,7 +41,7 @@ class WebAuthController extends Controller
         }
 
         public function logout(Request $request){
-            dd($request);
+           // dd($request);
            // $token = $request->user()->token();
             //$token->revoke();
             return redirect('/login/page');
