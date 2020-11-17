@@ -22,9 +22,9 @@ class CreateIssuesTable extends Migration
             $table->string('turnNo_at_court');
             $table->text('description');
             $table->string('file_no');
-            $table->unsignedBigInteger('court_id')->nullable();
-            $table->foreign('court_id')->references('id')->on('courts')->onDelete('set null')
-            ->onUpdate('cascade');
+            // $table->unsignedBigInteger('court_id')->nullable();
+            // $table->foreign('court_id')->references('id')->on('courts')->onDelete('set null')
+            // ->onUpdate('cascade');
             $table->string('issueNo_at_court');
             $table->enum('issue_type', ['قضائية', 'جنائية','اموال عامة '])->default('جنائية');
             $table->string('issueNo_at_police');
