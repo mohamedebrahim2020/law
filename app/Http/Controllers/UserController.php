@@ -114,7 +114,11 @@ class UserController extends Controller
         $usersRoles = [];
         foreach($users as $user){
             $roles= $user->roles->pluck('name');
+            if (! $roles[0] ) {
+                $role = "بدون مجموعه";
+            } else {
             $role= $roles[0];
+        }
             $usersRoles += ["$user->id"=> [$user->employee->name,$role]];
         }
         return response()->json($usersRoles);
