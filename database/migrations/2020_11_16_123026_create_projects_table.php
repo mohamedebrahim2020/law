@@ -17,9 +17,7 @@ class CreateProjectsTable extends Migration
             $table->id();
             $table->string('project_name')->unique();
             $table->date('start_date');
-            $table->unsignedBigInteger('branch_id')->nullable();
-            $table->foreign('branch_id')->references('id')->on('branches')->onDelete('set null')
-            ->onUpdate('cascade');
+            $table->string('branch_name');
             $table->integer('project_type')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
