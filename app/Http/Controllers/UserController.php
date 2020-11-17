@@ -111,13 +111,16 @@ class UserController extends Controller
 
     public function get_users_role(){
         $users = User::with('roles')->get();
+        $user1 = User::find(4);
+        //return response()->json($user1->roles);
         $usersRoles = [];
         foreach($users as $user){
-            $roles= $user->roles->pluck('name');
-            if (! $roles[0] ) {
+            $roles= $user->roles;
+            if (count($roles) == 0 ) {
                 $role = "بدون مجموعه";
             } else {
-            $role= $roles[0];
+            $roles= $roles->pluck('name');
+            $role = $roles[0];
         }
             $usersRoles += ["$user->id"=> [$user->employee->name,$role]];
         }
