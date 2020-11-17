@@ -26,7 +26,7 @@ class CreateIssuesTable extends Migration
             $table->foreign('court_id')->references('id')->on('courts')->onDelete('set null')
             ->onUpdate('cascade');
             $table->string('issueNo_at_court');
-            $table->enum('issue_type', ['قضائية', 'جنائية','اموال عامة '])->default('بالساعه');
+            $table->enum('issue_type', ['قضائية', 'جنائية','اموال عامة '])->default('جنائية');
             $table->string('issueNo_at_police');
             $table->string('issueNo_at_public');
             $table->string('hallNo_at_public');
