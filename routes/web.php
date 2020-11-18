@@ -20,7 +20,7 @@ Route::get('/hima', function () {
     return view('index');
 });
 Route::get('/login/page', function () {
-    return view('auth.login');
+    return view('auth.logins');
 });
 Route::get('/logout','WebAuthController@logout');//to be continued
 Route::get('/passwordForm','WebAuthController@pass');//to be continued
@@ -31,7 +31,7 @@ Route::get('/invalid/password', function () {
     return view('auth.resetPassword');
 });
 Route::get('/dashboard/page',function (){
-    return view('layouts.main'); 
+    return view('layouts.master'); 
 });
 
 Route::post('/login', 'WebAuthController@login');
@@ -62,3 +62,7 @@ Route::group([
 //Route::get('/employees/groups', 'UserController@get_employees_groups');
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

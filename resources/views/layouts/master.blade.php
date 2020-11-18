@@ -116,7 +116,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="img/profile-pic.png" alt="" style="border-radius: 33px;">
-                                <span class="username">{{$user->user_name}} </span>
+                                <span class="username">{{Auth::user()->user_name}} </span>
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">

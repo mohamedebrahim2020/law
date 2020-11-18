@@ -42,6 +42,8 @@ Route::group([
     Route::delete('delete/user/{id}', 'UserController@destroyUser');
     Route::delete('delete/role/{id}', 'UserController@destroyRole');
     Route::put('update/user', 'UserController@updateUser');
+    Route::put('update/role', 'UserController@updateRole');
+    
 
 
 });

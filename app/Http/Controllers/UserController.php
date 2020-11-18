@@ -96,7 +96,18 @@ class UserController extends Controller
 
     public function allUsers(){
         $Users = User::with('employee')->with('roles')->get();
-        return response()->json($Users,200); 
+        $usersRoles = [];
+        foreach($Users as $user){
+            $roles= $user->roles;
+            if (count($roles) == 0 ) {
+                $role = "بدون مجموعه";
+            } else {
+            $roles= $roles->pluck('name');
+            $role = $roles[0];
+        }
+            $usersRoles += ["$user->id"=> [$user->user_name,$user->employee->name,$role]];
+        }
+        return response()->json($usersRoles,200); 
     }
 
     public function allEmployees(){
@@ -111,7 +122,6 @@ class UserController extends Controller
 
     public function get_users_role(){
         $users = User::with('roles')->get();
-        $user1 = User::find(4);
         //return response()->json($user1->roles);
         $usersRoles = [];
         foreach($users as $user){
@@ -130,12 +140,12 @@ class UserController extends Controller
     public function destroyUser($id){
         $user = User::find($id);
         return response()->json($user);
-    //     if ($user == null) {
-    //        return response()->json(["message"=>"هذا المستخدم غير موجودة "],500);
-    //     } else {  
-    //     $deleteduser = $user->delete();
-    //     return response()->json(["deleteduser"=>$user,"message"=>"تم حذف المستخدم بنجاح"],200);
-    //    } 
+        if ($user == null) {
+           return response()->json(["message"=>"هذا المستخدم غير موجودة "],500);
+        } else {  
+        $deleteduser = $user->delete();
+        return response()->json(["deleteduser"=>$user,"message"=>"تم حذف المستخدم بنجاح"],200);
+       } 
     }
 
     public function destroyRole($id){
@@ -171,6 +181,17 @@ class UserController extends Controller
 
       return response()->json(['user'=>$user,'message'=>'لقد تم تعديل البيانات بنجاح']);
     
+
+    }
+
+    public function updateRole(Request $request){
+        $role=Role::find($request->id);
+        $role->name =$request->name;
+        $role->description=$request->description;
+        $role->Active = $request->Active;
+        $role->save();
+
+        return response()->json(['role'=>$role,'message'=>'لقد تم تعديل البيانات بنجاح']);
 
     }
 }
