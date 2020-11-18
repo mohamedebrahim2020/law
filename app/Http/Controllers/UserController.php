@@ -24,10 +24,10 @@ class UserController extends Controller
 
     public function storeUser(StoreUserRequest $request){
      
-        $employee = Employee::find($request->employee);
+        $employee = Employee::find($request->employee_id);
         $user = User::create([
             'user_name' => $request->user_name,
-            'employee_id' => $request->employee,
+            'employee_id' => $employee->id,
             'email' => $employee->email,
             'password' => $request->password,
         ]);
